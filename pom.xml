@@ -17,7 +17,28 @@
   </dependencies>
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <sonar.organization>samplepoc</sonar.organization>
+  <sonar.host.url>https://sonarcloud.io</sonar.host.url>
   </properties>
+  <servers>
+    <server>
+      <username>archana.mookandi@aa.com</username>
+      <password>cmVmdGtuOjAxOjE3MjQzMjMwNjk6NmJvVGNMR3BHd3lXbDZ6YkVSUGQxN1JCVG5v</password>
+      <id>central</id>
+    </server>
+    <server>
+      <username>archana.mookandi@aa.com</username>
+      <password>cmVmdGtuOjAxOjE3MjQzMjMwNjk6NmJvVGNMR3BHd3lXbDZ6YkVSUGQxN1JCVG5v</password>
+      <id>snapshots</id>
+    </server>
+  </servers>
+  <distributionManagement>
+    <snapshotRepository>
+        <id>snapshots</id>
+        <name>a0gfmextwwn1c-artifactory-primary-0-snapshots</name>
+        <url>https://artifactorypoc123.jfrog.io/artifactory/libs-snapshot</url>
+    </snapshotRepository>
+</distributionManagement>
   <build>
     <pluginManagement>
       <plugins>
