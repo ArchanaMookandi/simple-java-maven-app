@@ -21,7 +21,7 @@ pipeline {
       stage('SonarQube'){
               steps {
                   withSonarQubeEnv('SonarQube'){
-                      bat 'mvn clean package sonar:sonar'
+                      bat 'mvn clean package sonar:sonar -Dsonar.organization=samplepoc -Dsonar.projectKey=samplepoc_sample-java -Dsonar.token=$SONAR_AUTH_TOKEN'
                       echo 'Static Analysis Completed' 
                   }                
               }
