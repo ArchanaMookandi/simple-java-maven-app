@@ -3,7 +3,7 @@ pipeline {
     stages {
         stage('Build') {
             steps {
-        withCredentials([usernamePassword(credentialsId: 'jfrog-artifactory', usernameVariable: 'ARTIFACTORY_USER', passwordVariable: 'ARTIFACTORY_PASS')]) {
+        withCredentials([usernamePassword(credentialsId: 'jfrog-credential', usernameVariable: 'ARTIFACTORY_USER', passwordVariable: 'ARTIFACTORY_PASS')]) {
                 bat 'mvn -B -DskipTests clean package -Dusername=$ARTIFACTORY_USER -Dpassword=$ARTIFACTORY_PASS'
         }
             }
