@@ -17,21 +17,13 @@
   </dependencies>
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <sonar.organization>samplepoc</sonar.organization>
-  <sonar.host.url>https://sonarcloud.io</sonar.host.url>
+	<sonar.organization>samplepoc</sonar.organization>
+	<sonar.host.url>https://sonarcloud.io</sonar.host.url>
   </properties>
-  <servers>
-    <server>
-      <username>archana.mookandi@aa.com</username>
-      <password>cmVmdGtuOjAxOjE3MjQzMjMwNjk6NmJvVGNMR3BHd3lXbDZ6YkVSUGQxN1JCVG5v</password>
-      <id>central</id>
-    </server>
-    <server>
-      <username>archana.mookandi@aa.com</username>
-      <password>cmVmdGtuOjAxOjE3MjQzMjMwNjk6NmJvVGNMR3BHd3lXbDZ6YkVSUGQxN1JCVG5v</password>
-      <id>snapshots</id>
-    </server>
-  </servers>
+
+  <!-- remove the servers element from here -->
+  <!-- move it to the settings.xml file -->
+
   <distributionManagement>
     <snapshotRepository>
         <id>snapshots</id>
@@ -65,29 +57,72 @@
           </archive>
         </configuration>
       </plugin>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-enforcer-plugin</artifactId>
-        <version>3.3.0</version>
+	  <plugin>
+        <groupId>org.jfrog.buildinfo</groupId>
+        <artifactId>artifactory-maven-plugin</artifactId>
+        <version>3.6.1</version>
+        <inherited>false</inherited>
         <executions>
-          <execution>
-            <id>enforce-maven</id>
-            <goals>
-              <goal>enforce</goal>
-            </goals>
+            <execution>
+                <id>build-info</id>
+                <goals>
+                    <goal>publish</goal>
+                </goals>
+                <configuration>
+                    <publisher>
+                        <contextUrl>https://artifactorypoc123.jfrog.io/artifactory</contextUrl>
+
+                        <!-- use environment variables to pass Artifactory username and password as parameters -->
+                        <!-- see https://www.jfrog.com/confluence/display/JFROG/Artifactory+Maven+Plugin#ArtifactoryMavenPlugin-UsingEnvironmentVariables -->
+                        <!-- for more details and options -->
+                        <username>${env.ARTIFACTORY_USER}</username>
+                        <password>${env.ARTIFACTORY_PASS}</password>
+
+                        <repoKey>libs-release-local</repoKey>
+                        <snapshotRepoKey>libs-snapshot-local</snapshotRepoKey>
+                    </publisher>
+                    <publisher>
+                        <contextUrl>https://artifactorypoc123.jfrog.io/artifactory</contextUrl>
+
+                        <!-- use environment variables to pass Artifactory username and password as parameters -->
+                        <!-- see https://www.jfrog.com/confluence/display/JFROG/Artifactory+Maven+Plugin#ArtifactoryMavenPlugin-UsingEnvironmentVariables -->
+                        <!-- for more details and options -->
+                        <username>${env.ARTIFACTORY_USER}</username>
+                        <password>${env.ARTIFACTORY_PASS}</password>
+
+                        <repoKey>libs-release</repoKey>
+                        <snapshotRepoKey>libs-snapshot</snapshotRepoKey>
+                    </publisher>
+                </configuration>
+            </execution>
+            </executions>
+        </plugin>
+        <plugin>
+            <groupId>org.sonarsource.scanner.maven</groupId>
+            <artifactId>sonar-maven-plugin</artifactId>
+            <version>3.9.1.2184</version>
+            <!-- specify sonar properties in pom file -->
+            <!-- see https://docs.sonarqube.org/latest/analysis/scan/sonarscanner-for-maven/ -->
+            <!-- for more details and options -->
             <configuration>
-              <rules>
-                <requireMavenVersion>
-                  <version>[3.8.6,)</version>
-                </requireMavenVersion>
-                <requireJavaVersion>
-                  <version>[11,)</version>
-                </requireJavaVersion>
-              </rules>
+                <sonar.host.url>https://sonarcloud.io</sonar.host.url>
+                <sonar.projectKey>samplepoc_sample-java</sonar.projectKey>
+                <sonar.organization>samplepoc</sonar.organization>
+                <sonar.projectName>my-app</sonar.projectName>
+                <sonar.projectVersion>1.0</sonar.projectVersion>
+                <sonar.sources>src/main/java</sonar.sources>
+                <sonar.tests>src/test/java</sonar.tests>
             </configuration>
-          </execution>
-        </executions>
-      </plugin>
+
+        </plugin>
+
+      <!-- other plugins -->
+
     </plugins>
+
+    <!-- other build elements -->
   </build>
+
+  <!-- other project elements -->
+  
 </project>
