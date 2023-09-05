@@ -26,7 +26,7 @@ pipeline {
                   }                
               }
       }
-      stage('Build'){
+      stage('Deploy'){
               steps {
                 bat 'copy %WORKSPACE%/target/*.jar C:/SWSetup/apache-tomcat-9.0.80-App/webapps'
                 bat 'call C:/SWSetup/apache-tomcat-9.0.80-App/bin/startup.bat' 
